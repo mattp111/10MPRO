@@ -34,7 +34,7 @@
                 resultBox = document.getElementById("resultBox") // Get the result box
                 sum = resultBox.value; // Get the users sum
                 try { // Try statement to stop errors such as invalid sum
-                    result = eval(sum); // Evaluate it, yes I know eval isnt probably the best way to go but its the easiest
+                    result = eval(sum); // Evaluate it
                     resultBox.value = result; // Print the result
                 } catch { // If the was an error alert user
                     alert("Error evaluting sum");
