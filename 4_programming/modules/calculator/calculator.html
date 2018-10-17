@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator</title>
+    </head>
+
+    <body>
+
+        <h3>Result: </h3><input type="text" id="resultBox">
+        <br>
+        <br>
+
+        <!-- Now we will create all the buttons for the calculator -->
+        <button id="7button" onclick="buttonClick(this.id)">7</button> <button id="8button" onclick="buttonClick(this.id)">8</button> <button id="9button" onclick="buttonClick(this.id)">9</button> <button id="plusButton" onclick="buttonClick(this.id)">+</button><br>
+        <button id="4button" onclick="buttonClick(this.id)">4</button> <button id="5button" onclick="buttonClick(this.id)">5</button> <button id="6button" onclick="buttonClick(this.id)">6</button> <button id="minusButton" onclick="buttonClick(this.id)">-</button><br>
+        <button id="1button" onclick="buttonClick(this.id)">1</button> <button id="2button" onclick="buttonClick(this.id)">2</button> <button id="3button" onclick="buttonClick(this.id)">3</button> <button id="timesButton" onclick="buttonClick(this.id)">*</button><br>
+        <button id="0button" onclick="buttonClick(this.id)">0</button> <button id="solveButton" style="width: 51px;" onclick="solve()">=</button> <button id="divideButton" onclick="buttonClick(this.id)">/</button><br>
+        <button style="width: 102px;" onclick="clear()">C</button>
+
+        <!-- The js -->
+        <script>
+
+            // Simple function pretty much just adds the number of the button
+            // To the result field
+            function buttonClick(buttonId) {
+                resultBox = document.getElementById("resultBox");
+                buttonText = document.getElementById(buttonId).textContent;
+                resultBox.value += buttonText;
+
+            }
+
+            // Function to solve sum
+            function solve() {
+                resultBox = document.getElementById("resultBox") // Get the result box
+                sum = resultBox.value; // Get the users sum
+                try { // Try statement to stop errors such as invalid sum
+                    result = eval(sum); // Evaluate it, yes I know eval isnt probably the best way to go but its the easiest
+                    resultBox.value = result; // Print the result
+                } catch { // If the was an error alert user
+                    alert("Error evaluting sum");
+                    resultBox.value = "";
+                }
+            }
+
+            // Extremely easy function to clear result
+            function clear() { document.getElementById("resultBox").value = ""; }
+
+        </script>
+
+    </body>
+</html>
