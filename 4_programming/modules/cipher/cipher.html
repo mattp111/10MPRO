@@ -31,6 +31,7 @@
       }
 
       function cipher(letter, shift) {
+        shift = shift - 1;
         try {
           var ascii = letter.charCodeAt(0);
           if (ascii >= 97 && ascii <= 122) {
@@ -62,6 +63,7 @@
           for (i = 0; i < shiftArray.length; i++) {
             if (clearText[wLoop] == " ") {
               cipherText += " ";
+              i -= 1;
             } else {
               cipherText += cipher(clearText[wLoop], shiftArray[i]);
             }
