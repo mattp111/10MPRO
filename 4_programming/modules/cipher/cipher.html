@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vignere Cipher</title>
+  </head>
+
+  <body>
+    <h1>Vignere Cipher</h1>
+
+    <br>
+
+    <h4>Encode</h4>
+    <textarea id="encodeArea" rows="10" cols="50">The quick brown fox jumps over the lazy dog</textarea><br><br>
+    Key: <input id="keyInput" type="text"><br><br>
+    <button onclick="encode()">Encode!</button>
+
+    <script>
+
+      var letterNum = {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6, "g": 7, "h": 8, "i": 9, "j": 10, "k": 11, "l": 12,
+                  "m": 13, "n": 14, "o": 15, "p": 16, "q": 17, "r": 18, "s": 19, "t": 20, "u": 21, "v": 22, "w": 23, "x": 24,
+                  "y": 25, "z": 26}
+
+      function createShiftArray(key, textLength) {
+        var shiftArray = [];
+
+        for (i = 0; i < key.length; i++) {
+          shiftArray.push(letterNum[key.charAt(i)]);
+        }
+
+        return shiftArray;
+      }
+
+      function cipher(letter, shift) {
+        shift = shift - 1;
+        try {
+          var ascii = letter.charCodeAt(0);
+          if (ascii >= 97 && ascii <= 122) {
+            return String.fromCharCode((ascii - 97 + shift) % 26 + 97) // Didnt come up with this found from google
+          } else {
+            alert("Invalid input!");
+          }
+        } catch {
+          return "";
+        }
+      }
+
+      // Function to encode text
+      function encode() {
+        var encodeArea = document.getElementById("encodeArea");
+        var key = document.getElementById("keyInput").value.toLowerCase();
+        var clearText = encodeArea.value.toLowerCase();
+
+        console.log("Key: " + key);
+        console.log("Clear text: " + clearText);
+
+        var shiftArray = createShiftArray(key, clearText.length);
+        console.log("Shift array: " + shiftArray);
+
+        var wLoop = 0;
+        var cipherText = "";
+
+        while (wLoop <= clearText.length - 1) {
+          for (i = 0; i < shiftArray.length; i++) {
+            if (clearText[wLoop] == " ") {
+              cipherText += " ";
+              i -= 1;
+            } else {
+              cipherText += cipher(clearText[wLoop], shiftArray[i]);
+            }
+            wLoop++;
+          }
+        }
+        encodeArea.value = cipherText
+      }
+    </script>
