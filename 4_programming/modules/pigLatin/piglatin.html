@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pig Latin</title>
+    </head>
+
+    <body>
+        <h2>Pig Latin</h2>
+        <textarea id="encodeArea" rows="10" cols="50">The quick brown fox jumps over the lazy dog</textarea><br><br>
+        <button id="encodeButton" onclick="pigLatin()">Encode!</button>
+
+        <script>
+            function checkIn(text, array) {
+                for(var i = 0; i < array.length; i++) {
+                    console.log(text + " - " + array[i]);
+                    if (text == array[i]) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            function pigLatin() {
+                var encodeArea = document.getElementById("encodeArea");
+                var text = encodeArea.value;
+
+                var vowels = ["a", "e", "i", "o", "u"];
+                var consts = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
+
+                var textArray = Array.from(text);
+                console.log(textArray);
+
+                if (checkIn(textArray[0], vowels)) {
+                    encodeArea.value += "ay";
+                    return;
+                }
+
+                for (var i = 0; i < textArray.length; i++) {
+                    if (checkIn(textArray[i], consts)) {
+                        textArray.push(textArray[i]);
+                        textArray.splice(i, 1);
+                        i -= 1;
+                    } else {
+                        break;
+                    }
+                }
+
+                encodeArea.value = textArray.join("") + "ay";
+                return;
+            }
+        </script>
+    </body>
+</html>
