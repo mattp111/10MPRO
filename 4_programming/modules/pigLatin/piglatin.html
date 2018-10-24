@@ -12,7 +12,6 @@
         <script>
             function checkIn(text, array) {
                 for(var i = 0; i < array.length; i++) {
-                    console.log(text + " - " + array[i]);
                     if (text == array[i]) {
                         return true;
                     }
@@ -29,6 +28,44 @@
 
                 var textArray = Array.from(text);
                 console.log(textArray);
+
+                if (checkIn(" ", textArray)) {
+                    var sentenceArray = [];
+                    var tempArray = [];
+
+                    for(var i = 0; i < textArray.length; i++) {
+                        if(textArray[i] != " ") {
+                            tempArray.push(textArray[i]);
+                            console.log("PUSHED CHAR");
+                        } else {
+                            sentenceArray.push(tempArray);
+                            tempArray = [];
+                            console.log("FOUND SPACE");
+                        }
+                    }
+
+                    sentenceArray.push(tempArray);
+                    tempArray = [];
+                    console.log(sentenceArray);
+                    var finalArray = [];
+
+                    for(var l = 0; l < sentenceArray.length; l++) {
+                        for(var i = 0; i < sentenceArray[l].length; i++) {
+                            if (checkIn(sentenceArray[l][i], consts)) {
+                                sentenceArray[l].push(sentenceArray[l][i]);
+                                sentenceArray[l].splice(i, 1);
+                                i -= 1;
+                            } else {
+                                break;
+                            }
+                        }
+
+                        finalArray.push(sentenceArray[l].join("") + "ay" + " ");
+                    }
+
+                    encodeArea.value = finalArray.join("");
+                    return;
+                }
 
                 if (checkIn(textArray[0], vowels)) {
                     encodeArea.value += "ay";
