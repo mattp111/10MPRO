@@ -1,5 +1,4 @@
 // Initialise Mocha/Chai.
-console.log(document.currentScript.src);
 mocha.setup('bdd');
 mocha.traceIgnores = ['mocha.min.js', 'chai.min.js'];
 var expect = chai.expect;
@@ -58,8 +57,8 @@ describe('ifWhile', function() {
 
     vals.forEach(function(val) {
       var result = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][val];
-      it('should return ' + result + ' when given ' + val, function() {
-        expect(numToWord(val)).to.equal(result);
+      it('should return ' + result + ' (or uppercase equivalent) when given ' + val, function() {
+        expect(numToWord(val).toLowerCase()).to.equal(result);
       });
     });
   });
@@ -70,7 +69,7 @@ describe('ifWhile', function() {
     vals.forEach(function(val) {
       it('should log a count down from ' + val + ' to 0', function() {
         countdown(val);
-        expect(console.log).to.have.been.called.exactly(val+1).with(val).and.with(0);
+        expect(console.log).called.exactly(val+1).nth(1).with(val).and.nth(val+1).with(0);
       });
     });
   });
