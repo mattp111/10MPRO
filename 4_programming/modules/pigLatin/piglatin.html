@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pig Latin</title>
+    </head>
+
+    <body>
+        <h2>Pig Latin</h2>
+        <textarea id="encodeArea" rows="10" cols="50">The quick brown fox jumps over the lazy dog</textarea><br><br>
+        <button id="encodeButton" onclick="pigLatin()">Encode!</button>
+
+        <script>
+            // Checks to see if a string is in an array
+            function checkIn(text, array) {
+                for(var i = 0; i < array.length; i++) {
+                    if (text == array[i]) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // Function to encode string to pig letter
+            function pigLatin() {
+                var encodeArea = document.getElementById("encodeArea");
+                var text = encodeArea.value;
+
+                // Vowel and constant array
+                var vowels = ["a", "e", "i", "o", "u"];
+                var consts = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
+
+                var textArray = Array.from(text);
+                console.log(textArray);
+
+                // If there is more than one word
+                if (checkIn(" ", textArray)) {
+                    /*
+                        We need to split each word into an array of letters
+                        and then combine those to create an array that holds those arrays
+                        eg. simple example turns into [[s, i, m, p, l, e], [e, x, a, m, p, l, e]]
+                    */
+                    var sentenceArray = [];
+                    var tempArray = [];
+
+                    for(var i = 0; i < textArray.length; i++) {
+                        if(textArray[i] != " ") {
+                            tempArray.push(textArray[i]);
+                            console.log("PUSHED CHAR");
+                        } else {
+                            sentenceArray.push(tempArray);
+                            tempArray = [];
+                            console.log("FOUND SPACE");
+                        }
+                    }
+
+                    sentenceArray.push(tempArray);
+                    tempArray = [];
+                    console.log(sentenceArray);
+                    var finalArray = [];
+
+                    for(var l = 0; l < sentenceArray.length; l++) {
+                        for(var i = 0; i < sentenceArray[l].length; i++) {
+                            if (checkIn(sentenceArray[l][i], consts)) {
+                                sentenceArray[l].push(sentenceArray[l][i]);
+                                sentenceArray[l].splice(i, 1);
+                                i -= 1;
+                            } else {
+                                break;
+                            }
+                        }
+
+                        finalArray.push(sentenceArray[l].join("") + "ay" + " ");
+                    }
+
+                    encodeArea.value = finalArray.join("");
+                    return;
+                }
+
+                // If it starts with a vowel then we just and an 'ay' to the end
+                if (checkIn(textArray[0], vowels)) {
+                    encodeArea.value += "ay";
+                    return;
+                }
+
+                // Otherwise we will move the constenants to the back and add the 'ay'
+                for (var i = 0; i < textArray.length; i++) {
+                    if (checkIn(textArray[i], consts)) {
+                        textArray.push(textArray[i]);
+                        textArray.splice(i, 1);
+                        i -= 1;
+                    } else {
+                        break;
+                    }
+                }
+
+                encodeArea.value = textArray.join("") + "ay";
+                return;
+            }
+        </script>
+    </body>
+</html>

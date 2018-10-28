@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Receipt</title>
+    </head>
+
+    <body>
+        <h2>Receipt</h2>
+
+        Item Name: <input id="itemNameInput" type="text"><br><br>
+        Price: <input id="itemPriceInput" type="number"><br><br>
+        <button onclick="addItem()">Submit</button>
+
+        <h3>Items</h3>
+        <div id="items">
+
+        </div>
+        <h3 id="subtotal">Subtotal: </h3>
+
+        <script>
+            var items = [];
+
+            function calculateSubtotal() {
+                var subtotal = 0;
+                for(var i = 0; i < items.length; i++) {
+                    subtotal += items[i][1]
+                }
+
+                return subtotal;
+            }
+
+            function displayItems() {
+                var itemDiv = document.getElementById("items");
+                var totalHeader = document.getElementById("subtotal");
+                var total = calculateSubtotal();
+
+                itemDiv.innerHTML += "<p>" + items[items.length - 1][0] + " - $" + items[items.length - 1][1] + "</p>"
+                totalHeader.innerHTML = "Subtotal: $" + total;
+
+            }
+
+            function addItem() {
+                var itemName = document.getElementById("itemNameInput");
+                var itemPrice = document.getElementById("itemPriceInput");
+
+                items.push([itemName.value, parseFloat(itemPrice.value)]);
+                itemName.value = "";
+                itemPrice.value = "";
+                displayItems();
+                return;
+            }
+        </script>
+    </body>
+</html>
